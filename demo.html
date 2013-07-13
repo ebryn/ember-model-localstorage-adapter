@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <script type="text/x-handlebars" id="index">
+    <h1>People</h1>
+    <ul>
+      {{#each}}
+        <li>{{name}} <button {{action "deleteRecord" this}}>X</button></li>
+      {{/each}}
+    </ul>
+
+    <h2>Add a new person</h2>
+    <form {{action "save" on="submit"}}>
+      {{input type="text" value=newName}}
+      <button type="submit">Save</button>
+    </form>
+  </script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="http://builds.emberjs.com/handlebars-1.0.0.js"></script>
+  <script src="http://builds.emberjs.com/ember-latest.js"></script>
+  <script src="http://builds.erikbryn.com/ember-model/ember-model-latest.js"></script>
+  <script src="ember-model-localstorage-adapter.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
