@@ -94,8 +94,16 @@ Ember.LocalStorageAdapter = Ember.Adapter.extend({
     delete localStorage[key(klass, id)];
 
     var idsKey = classToString(klass) + '!ids',
-        ids = localStorage[idsKey];
-    localStorage[idsKey] = ids.replace(new RegExp("(^|,)" + id + "(,|$)"), "");
+        ids = localStorage[idsKey].split(',');
+
+    for (var i = 0, l = ids.length; i < l; i++) {
+      if (ids[i] === ''+id) { // handling id being a number or string
+        ids.splice(i, 1);
+        break;
+      }
+    }
+
+    localStorage[idsKey] = ids.join(',');
   },
 
   _updateIds: function(klass, newId) {
