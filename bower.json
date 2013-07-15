@@ -1,0 +1,15 @@
+{
+  "name": "ember-model-localstorage-adapter",
+  "version": "0.0.0",
+  "main": "ember-model-localstorage-adapter.js",
+  "dependencies": {
+    "ember-model": "latest"
+    },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "demo.html",
+    "demo.js"
+  ]
+}
