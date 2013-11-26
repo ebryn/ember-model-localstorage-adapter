@@ -52,10 +52,11 @@ Ember.LocalStorageAdapter = Ember.Adapter.extend({
       if (idsL) {
         idsL = idsL.split(',');
         for (var i = 0, l = ids.length; i < l; i++) {
-          data.push(self._getItem(klass, idsL[i]));
+          if (idsL.indexOf(ids[i]) != -1) {
+            data.push(self._getItem(klass, ids[i]));
+          }
         }
       }
-      console.log(data,ids);
       records.load(klass, data);
       resolve(records);
     });
