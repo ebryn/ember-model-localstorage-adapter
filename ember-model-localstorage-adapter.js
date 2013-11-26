@@ -42,6 +42,52 @@ Ember.LocalStorageAdapter = Ember.Adapter.extend({
     });
   },
 
+  findMany: function(klass, records, ids) {
+    var self = this;
+
+    return new Promise(function (resolve, reject) {
+      var idsL = localStorage[classToString(klass) + '!ids'],
+          data = [];
+
+      if (idsL) {
+        idsL = idsL.split(',');
+        for (var i = 0, l = ids.length; i < l; i++) {
+          if (idsL.indexOf(ids[i]) != -1) {
+            data.push(self._getItem(klass, ids[i]));
+          }
+        }
+      }
+      records.load(klass, data);
+      resolve(records);
+    });
+  },
+
+  findQuery: function(klass, records, params) {
+    var self = this;
+
+    return new Promise(function (resolve, reject) {
+      var ids = localStorage[classToString(klass) + '!ids'],
+          data = [];
+
+      if (ids) {
+        ids = ids.split(',');
+        for (var i = 0, l = ids.length; i < l; i++) {
+          var dontInsert = false;
+          var record = self._getItem(klass, ids[i]);
+          for (var key in params) {
+            if (!params.hasOwnProperty(key)) { continue; }
+            var value = params[key];
+            if (record[key] !== value) { dontInsert = true; }
+          }
+          if (!dontInsert)
+            data.push(self._getItem(klass, ids[i]));
+        }
+      }
+      records.load(klass, data);
+      resolve(records);
+    });
+  },
+
   createRecord: function(record) {
     var self = this,
         klass = record.constructor;
